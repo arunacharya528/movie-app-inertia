@@ -18,5 +18,7 @@ class UserSeeder extends Seeder
         User::factory()->create([
             'email' => 'admin@movieapp.com'
         ]);
+
+        User::factory(9)->create();
     }
 }
