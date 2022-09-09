@@ -14,9 +14,6 @@ export default function User(props) {
         >
             <Head title="All users" />
 
-            {console.log(props)}
-
-
             <div className="container mx-auto">
                 <div className="overflow-x-auto">
                     <table className="table w-full">
