@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
+// import { useLocation } from 'react-router-dom';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/inertia-react';
 
+import sidebarData from "@/data/sidebar.json"
+import { split } from 'lodash';
+
 export default function Authenticated({ auth, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
+    const location = window.location.pathname;
+    console.log(location)
     return (
         <div className="min-h-screen bg-gray-100">
             <nav className="bg-white border-b border-gray-100">
@@ -117,7 +123,32 @@ export default function Authenticated({ auth, header, children }) {
                 </header>
             )}
 
-            <main>{children}</main>
+
+            <div className='grid grid-cols-5'>
+                <aside>
+                    <ul className="menu bg-base-100 sticky top-0">
+                        {sidebarData.map((item, index) =>
+                            <li key={index}>
+                                <a href={`${item.path}`} className={location === item.path ? 'active' : ''}>
+                                    {item.name}
+                                </a>
+                                {item.directories ?
+                                    <ul className="bg-base-100">
+                                        {item.directories.map((sub, index) =>
+                                            <li key={index}>
+                                                <a href={`${item.path}${sub.path}`}>{sub.name}</a>
+                                            </li>
+                                        )}
+                                    </ul>
+                                    : ''
+                                }
+                            </li>
+
+                        )}
+                    </ul>
+                </aside>
+                <main className='col-span-4'>{children}</main>
+            </div>
         </div>
     );
 }

@@ -1,0 +1,17 @@
+[{
+        "name": "Dashboard",
+        "path": "/dashboard"
+    },
+    {
+        "name": "Users",
+        "path": "/user"
+    },
+    {
+        "name": "Movies",
+        "path": "/movie",
+        "directories": [{
+            "name": "Add new movie",
+            "path": "/add"
+        }]
+    }
+]

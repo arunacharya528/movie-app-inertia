@@ -16,7 +16,7 @@ class MovieController extends Controller
     public function index()
     {
 
-        return Inertia::render('Movie', ['movies' => Movie::get()]);
+        return Inertia::render('Movie/Movie', ['movies' => Movie::get()]);
     }
 
     /**
@@ -26,7 +26,7 @@ class MovieController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Movie/Add');
     }
 
     /**
