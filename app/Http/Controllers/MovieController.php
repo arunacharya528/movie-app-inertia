@@ -90,7 +90,7 @@ class MovieController extends Controller
      */
     public function edit($id)
     {
-        //
+        return Inertia::render('Movie/Edit', ['movie' => Movie::find($id)]);
     }
 
     /**
@@ -102,7 +102,17 @@ class MovieController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'release_date' => 'required'
+        ]);
+
+        $movie = Movie::find($id);
+        $movie->update($request->all());
+
+        return redirect(route('movie.show', $id));
     }
 
     /**

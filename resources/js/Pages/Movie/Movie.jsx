@@ -62,8 +62,10 @@ export default function User(props) {
                                 <td >
                                     <div className="flex space-x-3">
                                         {/* <PrimaryButton>View</PrimaryButton> */}
-                                        <Link href={route('movie.show',movie.id)} className="btn btn-ghost">View</Link>
-                                        <PrimaryButton>Edit</PrimaryButton>
+                                        <Link href={route('movie.show', movie.id)} className="btn btn-ghost">View</Link>
+                                        <Link href={route('movie.edit', movie.id)} className="btn btn-ghost">Edit</Link>
+
+                                        {/* <PrimaryButton>Edit</PrimaryButton> */}
                                         <PrimaryButton>Delete</PrimaryButton>
                                     </div>
                                 </td>
