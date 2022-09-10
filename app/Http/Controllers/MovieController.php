@@ -16,11 +16,14 @@ class MovieController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-
+        $movies = Movie::withCount('favourites');
+        if ($request->query('published')) {
+            $movies = $movies->where('published', true);
+        }
         return Inertia::render('Movie/Movie', [
-            'movies' => Movie::withCount('favourites')->get()
+            'movies' => $movies->orderBy('created_at', 'desc')->get()
         ]);
     }
 
@@ -45,7 +48,8 @@ class MovieController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'release_date' => ['required']
+            'release_date' => ['required'],
+            'poster' => 'required'
         ]);
 
         DB::beginTransaction();
@@ -124,5 +128,14 @@ class MovieController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function togglePublishedState($id)
+    {
+        $movie = Movie::find($id);
+        $movie->published = !$movie->published;
+        $movie->save();
+        return redirect(route('movie.index'));
     }
 }

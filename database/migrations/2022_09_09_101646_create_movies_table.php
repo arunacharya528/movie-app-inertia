@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('description');
             $table->timestamp('release_date');
             $table->string('poster');
+            $table->boolean('published')->default(false);
             $table->timestamps();
         });
     }

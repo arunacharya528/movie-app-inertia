@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Movie extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'description', 'release_date', 'poster'];
+    protected $fillable = ['title', 'description', 'release_date', 'poster', 'published'];
 
-    public function favourites(){
-        return $this->hasMany(Favourite::class,'movie_id');
+    public function favourites()
+    {
+        return $this->hasMany(Favourite::class, 'movie_id');
     }
-
 }

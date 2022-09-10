@@ -58,6 +58,6 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource('user', UserController::class);
-
     Route::resource('movie', MovieController::class);
+    Route::post("movie/togglePublishedState/{id}", [MovieController::class, 'togglePublishedState'])->name('movie.togglePublishedState');
 });

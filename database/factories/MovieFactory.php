@@ -20,7 +20,8 @@ class MovieFactory extends Factory
             'title' => $this->faker->sentence(),
             'description' => $this->faker->paragraphs(5, true),
             'release_date' => $this->faker->date(),
-            'poster' => 'Fake.png'
+            'poster' => 'Fake.png',
+            'published' => $this->faker->randomElement([true, false])
         ];
     }
 }

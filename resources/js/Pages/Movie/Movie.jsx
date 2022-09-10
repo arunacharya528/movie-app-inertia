@@ -4,6 +4,7 @@ import { Head, Link } from '@inertiajs/inertia-react';
 
 import moment from 'moment';
 import PrimaryButton from '@/components/PrimaryButton';
+import { MoviePublishToggle } from '@/components/MoviePublishToggle';
 
 export default function User(props) {
     const MoviePoster = ({ movie }) => {
@@ -30,10 +31,14 @@ export default function User(props) {
         >
             <Head title="Movies" />
 
-            {/* <div className="grid grid-cols-3 gap-5"> */}
-            <div className="pb-5">
-                <button className='btn btn-ghost'>Add movie</button>
+            <div className="pb-5 flex justify-between">
 
+                <Link className='btn' href={route('movie.create')}>Add movie</Link>
+                <div className="grow flex justify-end space-x-3">
+                    <button className='btn' onClick={() => { window.location.search = "published=true" }}>Published Movies</button>
+                    <button className='btn' onClick={() => { window.location.search = "" }}>All movies</button>
+                    <button className='btn' onClick={() => { window.location.reload() }}>Refresh</button>
+                </div>
             </div>
             <div className=" overflow-x-auto">
                 <table className="table w-full">
@@ -44,6 +49,7 @@ export default function User(props) {
                             <th>Title</th>
                             <th>Release Date</th>
                             <th>No of Favourites</th>
+                            <th>Publish</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -59,13 +65,13 @@ export default function User(props) {
                                 </td>
                                 <td>{moment(movie.release_date).format("Y-M-d")}</td>
                                 <td>{movie.favourites_count}</td>
+                                <td>
+                                    <MoviePublishToggle published={movie.published} id={movie.id} />
+                                </td>
                                 <td >
                                     <div className="flex space-x-3">
-                                        {/* <PrimaryButton>View</PrimaryButton> */}
                                         <Link href={route('movie.show', movie.id)} className="btn btn-ghost">View</Link>
                                         <Link href={route('movie.edit', movie.id)} className="btn btn-ghost">Edit</Link>
-
-                                        {/* <PrimaryButton>Edit</PrimaryButton> */}
                                         <PrimaryButton>Delete</PrimaryButton>
                                     </div>
                                 </td>
