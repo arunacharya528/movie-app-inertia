@@ -14,6 +14,7 @@ export default function Authenticated({ auth, header, children }) {
 
     const location = window.location.pathname;
 
+
     return (
         <div className="min-h-screen bg-gray-100">
             <nav className="bg-white border-b border-gray-100">
@@ -27,9 +28,15 @@ export default function Authenticated({ auth, header, children }) {
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Dashboard
-                                </NavLink>
+                                {
+                                    sidebarData.map((item, index) =>
+                                        auth.user.role === item.role ?
+                                            <NavLink href={route(item.name)} active={route().current(item.name)}>
+                                                {item.title}
+                                            </NavLink>
+                                            : ''
+                                    )
+                                }
                             </div>
                         </div>
 
@@ -97,9 +104,16 @@ export default function Authenticated({ auth, header, children }) {
 
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                     <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                            Dashboard
-                        </ResponsiveNavLink>
+                        {
+                            sidebarData.map((item, index) =>
+                                auth.user.role === item.role ?
+
+                                    <ResponsiveNavLink href={route(item.name)} active={route().current(item.name)}>
+                                        {item.title}
+                                    </ResponsiveNavLink>
+                                    : ''
+                            )
+                        }
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
@@ -124,8 +138,8 @@ export default function Authenticated({ auth, header, children }) {
             )}
 
 
-            <div className='grid grid-cols-5'>
-                <aside>
+            {/* <div className='grid grid-cols-5'> */}
+            {/* <aside>
                     <ul className="menu bg-base-100 sticky top-0">
                         {sidebarData.map((item, index) =>
                             auth.user.role === item.role ?
@@ -147,9 +161,9 @@ export default function Authenticated({ auth, header, children }) {
                                 : ''
                         )}
                     </ul>
-                </aside>
-                <main className='col-span-4 p-5'>{children}</main>
-            </div>
+                </aside> */}
+            <main className='col-span-4 p-5'>{children}</main>
+            {/* </div> */}
         </div>
     );
 }

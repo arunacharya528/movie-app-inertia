@@ -1,25 +1,41 @@
 [{
-        "name": "Dashboard",
-        "path": "/dashboard",
+        "title": "Home",
+        "name": "home",
         "role": 1
     },
     {
-        "name": "Users",
-        "path": "/user",
+        "title": "Home",
+        "name": "home",
+        "role": 2
+    },
+    {
+        "title": "Dashboard",
+        "name": "dashboard",
         "role": 1
     },
     {
-        "name": "Movies",
-        "path": "/movie",
-        "directories": [{
-            "name": "Add new movie",
-            "path": "/create"
-        }],
+        "title": "Dashboard",
+        "name": "dashboard",
+        "role": 2
+    },
+    {
+        "title": "Users",
+        "name": "user.index",
         "role": 1
     },
     {
-        "name": "Favourites",
-        "path": "/favourite",
+        "title": "Movies",
+        "name": "movie.index",
+        "role": 1
+    },
+    {
+        "title": "Add new movie",
+        "name": "movie.create",
+        "role": 1
+    },
+    {
+        "title": "Favourites",
+        "name": "favourite.index",
         "role": 2
     }
 ]
