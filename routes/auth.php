@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -60,4 +61,5 @@ Route::middleware('auth')->group(function () {
     Route::resource('user', UserController::class);
     Route::resource('movie', MovieController::class);
     Route::post("movie/togglePublishedState/{id}", [MovieController::class, 'togglePublishedState'])->name('movie.togglePublishedState');
+    Route::resource('favourite', FavouriteController::class);
 });
