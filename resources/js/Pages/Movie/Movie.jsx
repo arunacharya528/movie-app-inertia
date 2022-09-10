@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/inertia-react';
+import { Head, Link } from '@inertiajs/inertia-react';
 
 import moment from 'moment';
+import PrimaryButton from '@/components/PrimaryButton';
 
 export default function User(props) {
-    // console.log(props)
-
     const MoviePoster = ({ movie }) => {
         const [isPosterLarge, makePosterLarge] = useState(false);
 
@@ -31,34 +30,50 @@ export default function User(props) {
         >
             <Head title="Movies" />
 
-            <div className="container mx-auto">
-                <div className="overflow-x-auto">
-                    <table className="table w-full">
+            {/* <div className="grid grid-cols-3 gap-5"> */}
+            <div className="pb-5">
+                <button className='btn btn-ghost'>Add movie</button>
 
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Title</th>
-                                <th>Release Date</th>
-                                <th>Poster</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            {props.movies.map((movie, index) =>
-                                <tr>
-                                    <th>{index + 1}</th>
-                                    <td>{movie.title}</td>
-                                    <td>{moment(movie.release_date).format("Y-m-d")}</td>
-                                    <td className='w-96'>
-                                        <MoviePoster movie={movie} />
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
             </div>
+            <div className=" overflow-x-auto">
+                <table className="table w-full">
+
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Title</th>
+                            <th>Release Date</th>
+                            <th>No of Favourites</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {props.movies.map((movie, index) =>
+                            <tr>
+                                <th>{index + 1}</th>
+                                <td>
+                                    <div className="w-64 whitespace-pre-wrap">
+                                        {movie.title}
+                                    </div>
+                                </td>
+                                <td>{moment(movie.release_date).format("Y-M-d")}</td>
+                                <td>{movie.favourites_count}</td>
+                                <td >
+                                    <div className="flex space-x-3">
+                                        {/* <PrimaryButton>View</PrimaryButton> */}
+                                        <Link href={route('movie.show',movie.id)} className="btn btn-ghost">View</Link>
+                                        <PrimaryButton>Edit</PrimaryButton>
+                                        <PrimaryButton>Delete</PrimaryButton>
+                                    </div>
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+            <div></div>
+            {/* </div> */}
         </AuthenticatedLayout>
     );
 }

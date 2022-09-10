@@ -19,7 +19,9 @@ class MovieController extends Controller
     public function index()
     {
 
-        return Inertia::render('Movie/Movie', ['movies' => Movie::get()]);
+        return Inertia::render('Movie/Movie', [
+            'movies' => Movie::withCount('favourites')->get()
+        ]);
     }
 
     /**
@@ -77,7 +79,7 @@ class MovieController extends Controller
      */
     public function show($id)
     {
-        //
+        return Inertia::render('Movie/View', ['movie' => Movie::find($id)]);
     }
 
     /**
