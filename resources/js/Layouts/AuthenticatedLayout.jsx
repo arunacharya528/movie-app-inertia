@@ -14,8 +14,6 @@ export default function Authenticated({ auth, header, children }) {
 
     const location = window.location.pathname;
 
-
-    console.log(auth.user.role)
     return (
         <div className="min-h-screen bg-gray-100">
             <nav className="bg-white border-b border-gray-100">

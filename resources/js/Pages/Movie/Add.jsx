@@ -28,8 +28,7 @@ export default function Add(props) {
 
     const submit = (e) => {
         e.preventDefault();
-
-        post(route('login'));
+        post(route('movie.store'));
     };
 
 
@@ -92,7 +91,9 @@ export default function Add(props) {
                         type="file"
                         name="poster"
                         className="mt-1 block w-full"
-                        handleChange={handleFileUpload}
+                        handleChange={(e) => {
+                            setData(e.target.name, e.target.files[0])
+                        }}
                     />
 
                     <InputError message={errors.poster} className="mt-2" />
