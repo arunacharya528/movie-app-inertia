@@ -1,17 +1,25 @@
 [{
         "name": "Dashboard",
-        "path": "/dashboard"
+        "path": "/dashboard",
+        "role": 1
     },
     {
         "name": "Users",
-        "path": "/user"
+        "path": "/user",
+        "role": 1
     },
     {
         "name": "Movies",
         "path": "/movie",
         "directories": [{
             "name": "Add new movie",
-            "path": "/add"
-        }]
+            "path": "/create"
+        }],
+        "role": 1
+    },
+    {
+        "name": "Favourites",
+        "path": "/favourite",
+        "role": 2
     }
 ]

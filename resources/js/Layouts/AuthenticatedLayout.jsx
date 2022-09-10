@@ -13,7 +13,9 @@ export default function Authenticated({ auth, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     const location = window.location.pathname;
-    console.log(location)
+
+
+    console.log(auth.user.role)
     return (
         <div className="min-h-screen bg-gray-100">
             <nav className="bg-white border-b border-gray-100">
@@ -128,26 +130,27 @@ export default function Authenticated({ auth, header, children }) {
                 <aside>
                     <ul className="menu bg-base-100 sticky top-0">
                         {sidebarData.map((item, index) =>
-                            <li key={index}>
-                                <a href={`${item.path}`} className={location === item.path ? 'active' : ''}>
-                                    {item.name}
-                                </a>
-                                {item.directories ?
-                                    <ul className="bg-base-100">
-                                        {item.directories.map((sub, index) =>
-                                            <li key={index}>
-                                                <a href={`${item.path}${sub.path}`}>{sub.name}</a>
-                                            </li>
-                                        )}
-                                    </ul>
-                                    : ''
-                                }
-                            </li>
-
+                            auth.user.role === item.role ?
+                                <li key={index}>
+                                    <a href={`${item.path}`} className={location === item.path ? 'active' : ''}>
+                                        {item.name}
+                                    </a>
+                                    {item.directories ?
+                                        <ul className="bg-base-100">
+                                            {item.directories.map((sub, index) =>
+                                                <li key={index}>
+                                                    <a href={`${item.path}${sub.path}`}>{sub.name}</a>
+                                                </li>
+                                            )}
+                                        </ul>
+                                        : ''
+                                    }
+                                </li>
+                                : ''
                         )}
                     </ul>
                 </aside>
-                <main className='col-span-4'>{children}</main>
+                <main className='col-span-4 p-5'>{children}</main>
             </div>
         </div>
     );
