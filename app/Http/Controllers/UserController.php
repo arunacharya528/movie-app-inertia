@@ -13,10 +13,20 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $users =  User::with(['favourites.movie' => function ($query) use ($request) {
 
-        return Inertia::render('User', ['users' => User::get()]);
+            $query = $request->query('from') ? $query->whereDate('release_date', ">=", date("Y-m-d", strtotime($request->query('from')))) : $query;
+            $query = $request->query('to') ? $query->whereDate('release_date', "<=", date("Y-m-d", strtotime($request->query('to')))) : $query;
+            $query->get();
+        }])->get();
+
+        return Inertia::render('User', [
+            'users' => $users,
+            'from' => $request->query('from'),
+            'to' => $request->query('to')
+        ]);
     }
 
     /**
