@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SendMail;
+use App\Mail\FavouriteMail;
 use App\Models\Favourite;
+use App\Models\Movie;
+use App\Models\User;
+use Illuminate\Console\Scheduling\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 
 class FavouriteController extends Controller
@@ -40,10 +46,23 @@ class FavouriteController extends Controller
      */
     public function store(Request $request)
     {
-        Favourite::create([
-            'user_id' => Auth::user()->id,
-            'movie_id' => $request->movie_id
-        ]);
+        try {
+            $user = User::find(Auth::user()->id);
+
+            Favourite::create([
+                'user_id' => Auth::user()->id,
+                'movie_id' => $request->movie_id
+            ]);
+
+            $movie = Movie::find($request->movie_id);
+            $mailData = [
+                'name' => $user->name,
+                'movieName' => $movie->title
+            ];
+            Mail::to($user['email'])->send(new FavouriteMail($mailData));
+        } catch (\Throwable $th) {
+            error_log($th);
+        }
     }
 
     /**
