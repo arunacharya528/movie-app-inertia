@@ -29,20 +29,27 @@ export const MovieThumbnail = ({ props, movie }) => {
             <>
                 {props.auth.user !== null ?
 
-                    liked ?
-                        <div class="tooltip z-10" data-tip="Remove from favourite">
-                            <button className={"btn btn-ghost bg-red-500 btn-square text-white"} onClick={e => handleUnlike(movie.favourites[0].id)}>
+                    props.auth.user.role === 1 ?
+                        <div class="tooltip z-10" data-tip="Login as user to add to favourite">
+                            <button className={"btn btn-ghost btn-square text-white"} >
                                 {movie.favourites_count} Like
                             </button>
                         </div>
                         :
-                        <div class="tooltip z-10" data-tip="Add to favourite">
-                            <button className={"btn btn-ghost btn-square text-white"} onClick={handleLike}>
-                                {movie.favourites_count} Like
-                            </button>
-                        </div>
+                        liked ?
+                            <div class="tooltip z-10" data-tip="Remove from favourite">
+                                <button className={"btn btn-ghost bg-red-500 btn-square text-white"} onClick={e => handleUnlike(movie.favourites[0].id)}>
+                                    {movie.favourites_count} Like
+                                </button>
+                            </div>
+                            :
+                            <div class="tooltip z-10" data-tip="Add to favourite">
+                                <button className={"btn btn-ghost btn-square text-white"} onClick={handleLike}>
+                                    {movie.favourites_count} Like
+                                </button>
+                            </div>
                     :
-                    <div class="tooltip z-10" data-tip="Login to add to cart">
+                    <div class="tooltip z-10" data-tip="Login to add to favourite">
                         <button className={"btn btn-ghost btn-square text-white"} >
                             {movie.favourites_count} Like
                         </button>
@@ -58,7 +65,7 @@ export const MovieThumbnail = ({ props, movie }) => {
             <img src={`${props.ziggy.url}/storage/${movie.poster}`} className="!w-96 h-auto rounded-box" />
             <div className="absolute bottom-0 w-full bg-gradient-to-t from-indigo-500/90 via-indigo-500/50 text-white to-transparent rounded-b-box p-3 flex space-x-3">
                 <div className="font-bold text-md">{movie.title}</div>
-                <div className="flex flex-col">
+                <div className="flex flex-col justify-between">
                     <LikeButton movie={movie} />
                     <span>
                         {moment(movie.release_date).format("yyyy")}
