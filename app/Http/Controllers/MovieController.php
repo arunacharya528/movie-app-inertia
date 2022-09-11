@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Movie;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -18,6 +19,10 @@ class MovieController extends Controller
      */
     public function index(Request $request)
     {
+        if (Auth::user()->role === 2) {
+            return redirect('unauthorized');
+        }
+
         $movies = Movie::withCount('favourites');
         if ($request->query('published')) {
             $movies = $movies->where('published', true);
@@ -34,6 +39,10 @@ class MovieController extends Controller
      */
     public function create()
     {
+        if (Auth::user()->role === 2) {
+            return redirect('unauthorized');
+        }
+
         return Inertia::render('Movie/Add');
     }
 
@@ -45,6 +54,10 @@ class MovieController extends Controller
      */
     public function store(Request $request)
     {
+        if (Auth::user()->role === 2) {
+            return redirect('unauthorized');
+        }
+
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -93,6 +106,9 @@ class MovieController extends Controller
      */
     public function edit($id)
     {
+        if (Auth::user()->role === 2) {
+            return redirect('unauthorized');
+        }
         return Inertia::render('Movie/Edit', ['movie' => Movie::find($id)]);
     }
 
@@ -105,7 +121,9 @@ class MovieController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        if (Auth::user()->role === 2) {
+            return redirect('unauthorized');
+        }
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -126,6 +144,9 @@ class MovieController extends Controller
      */
     public function destroy($id)
     {
+        if (Auth::user()->role === 2) {
+            return redirect('unauthorized');
+        }
         Movie::destroy($id);
     }
 
@@ -137,6 +158,9 @@ class MovieController extends Controller
      */
     public function togglePublishedState($id)
     {
+        if (Auth::user()->role === 2) {
+            return redirect('unauthorized');
+        }
         $movie = Movie::find($id);
         $movie->published = !$movie->published;
         $movie->save();
@@ -146,12 +170,18 @@ class MovieController extends Controller
 
     public function editPoster($id)
     {
+        if (Auth::user()->role === 2) {
+            return redirect('unauthorized');
+        }
         return Inertia::render('Movie/EditPoster', ['movie' => Movie::find($id)]);
     }
 
 
     public function updatePoster(Request $request, $id)
     {
+        if (Auth::user()->role === 2) {
+            return redirect('unauthorized');
+        }
         $request->validate([
             'poster' => 'required'
         ]);

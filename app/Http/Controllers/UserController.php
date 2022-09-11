@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -15,6 +16,10 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        if (Auth::user()->role === 2) {
+            return redirect('unauthorized');
+        }
+
         $users =  User::with(['favourites.movie' => function ($query) use ($request) {
 
             $query = $request->query('from') ? $query->whereDate('release_date', ">=", date("Y-m-d", strtotime($request->query('from')))) : $query;

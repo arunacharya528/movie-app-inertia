@@ -22,6 +22,9 @@ class FavouriteController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->role === 1) {
+            return redirect('unauthorized');
+        }
         $favourites = Favourite::with(['movie' => function ($query) {
             return $query->withCount('favourites');
         }])->where('user_id', Auth::user()->id)->get();
@@ -46,6 +49,10 @@ class FavouriteController extends Controller
      */
     public function store(Request $request)
     {
+        if (Auth::user()->role === 1) {
+            return redirect('unauthorized');
+        }
+
         try {
             $user = User::find(Auth::user()->id);
 
@@ -107,6 +114,9 @@ class FavouriteController extends Controller
      */
     public function destroy(Favourite $favourite)
     {
+        if (Auth::user()->role === 1) {
+            return redirect('unauthorized');
+        }
         Favourite::destroy($favourite->id);
     }
 }
