@@ -47,7 +47,7 @@ To run this application follow these steps
     ```
 
 1. Run command `php artisan key:generate` which generates unique key
-1. Run command `php artisan run server` to run the application. A local link will be generated. Paste the link as
+1. Run command `php artisan serve` to run the application. A local link will be generated. Paste the link as
 
     ```
     APP_URL=<given link>
