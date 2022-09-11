@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('favourites', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('movie_id');
-            $table->foreign('movie_id')->references('id')->on('movies');
+            $table->foreign('movie_id')->references('id')->on('movies')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -1,28 +1,26 @@
 import React, { useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link } from '@inertiajs/inertia-react';
+import { Head, Link, useForm } from '@inertiajs/inertia-react';
 
 import moment from 'moment';
-import PrimaryButton from '@/components/PrimaryButton';
 import { MoviePublishToggle } from '@/components/MoviePublishToggle';
 
 export default function User(props) {
-    const MoviePoster = ({ movie }) => {
-        const [isPosterLarge, makePosterLarge] = useState(false);
+
+    const MovieDestroyForm = ({ id }) => {
+        const { delete: destroy } = useForm()
+
+        const submit = (e) => {
+            e.preventDefault();
+            destroy(route('movie.destroy', id));
+        };
 
         return (
-            <div className="relative w-full" onMouseEnter={e => makePosterLarge(true)} onMouseLeave={e => makePosterLarge(false)}>
-                <img src={`${props.ziggy.url}/storage/${movie.poster}`} className="h-16 w-auto rounded-box" />
-                {
-                    isPosterLarge ?
-                        <div className="absolute right-0  top-0 z-10">
-                            <img src={`${props.ziggy.url}/storage/${movie.poster}`} className="!w-96 h-auto rounded-box" />
-                        </div>
-                        : ''
-                }
-            </div>
+            <form onSubmit={submit}>
+                <button type='submit' className="btn btn-ghost">Delete</button>
+            </form>
         );
-    }
+    };
     return (
         <AuthenticatedLayout
             auth={props.auth}
@@ -35,9 +33,8 @@ export default function User(props) {
 
                 <Link className='btn' href={route('movie.create')}>Add movie</Link>
                 <div className="grow flex justify-end space-x-3">
-                    <button className='btn' onClick={() => { window.location.search = "published=true" }}>Published Movies</button>
-                    <button className='btn' onClick={() => { window.location.search = "" }}>All movies</button>
-                    <button className='btn' onClick={() => { window.location.reload() }}>Refresh</button>
+                    <Link className='btn' href={route('movie.index', { 'published': 'true' })}>Published Movies</Link>
+                    <Link className='btn' href={route('movie.index')}>All Movies</Link>
                 </div>
             </div>
             <div className=" overflow-x-auto">
@@ -72,7 +69,7 @@ export default function User(props) {
                                     <div className="flex space-x-3">
                                         <Link href={route('movie.show', movie.id)} className="btn btn-ghost">View</Link>
                                         <Link href={route('movie.edit', movie.id)} className="btn btn-ghost">Edit</Link>
-                                        <PrimaryButton>Delete</PrimaryButton>
+                                        <MovieDestroyForm id={movie.id} />
                                     </div>
                                 </td>
                             </tr>

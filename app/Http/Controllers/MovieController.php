@@ -127,10 +127,15 @@ class MovieController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Movie::destroy($id);
     }
 
-
+    /**
+     * Toggle between published state of the movie
+     * if it is unpublished then it will publish and vice-versa
+     *
+     * @param int $id
+     */
     public function togglePublishedState($id)
     {
         $movie = Movie::find($id);
