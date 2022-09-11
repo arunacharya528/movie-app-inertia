@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Favourite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class FavouriteController extends Controller
 {
@@ -15,7 +16,10 @@ class FavouriteController extends Controller
      */
     public function index()
     {
-        //
+        $favourites = Favourite::with(['movie' => function ($query) {
+            return $query->withCount('favourites');
+        }])->where('user_id', Auth::user()->id)->get();
+        return Inertia::render('Favourite', ['favourites' => $favourites]);
     }
 
     /**
