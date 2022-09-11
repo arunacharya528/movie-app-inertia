@@ -68,7 +68,6 @@ class MovieController extends Controller
         } catch (\Throwable $th) {
             error_log($th->getMessage());
             DB::rollBack();
-            return response()->json(['error' => $th->getMessage()], 500);
         }
         DB::commit();
 
@@ -142,5 +141,37 @@ class MovieController extends Controller
         $movie->published = !$movie->published;
         $movie->save();
         return redirect(route('movie.index'));
+    }
+
+
+    public function editPoster($id)
+    {
+        return Inertia::render('Movie/EditPoster', ['movie' => Movie::find($id)]);
+    }
+
+
+    public function updatePoster(Request $request, $id)
+    {
+        $request->validate([
+            'poster' => 'required'
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            $path = Storage::disk('public')->put("", $request->file('poster'));
+            if (!Storage::disk('public')->exists($path)) {
+                throw new Exception("File not saved");
+            }
+            $movie = Movie::find($id);
+            $movie->update([
+                'poster' => $path
+            ]);
+        } catch (\Throwable $th) {
+            error_log($th->getMessage());
+            DB::rollBack();
+        }
+        DB::commit();
+        return redirect(route('movie.show', $id));
     }
 }

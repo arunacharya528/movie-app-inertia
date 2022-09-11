@@ -41,6 +41,8 @@ export default function Add(props) {
             <Head title="Movies" />
 
             <form onSubmit={submit}>
+                <div className="text-2xl text-black font-bold py-5">Add movie</div>
+
                 <div>
                     <InputLabel forInput="title" value="Title" />
 

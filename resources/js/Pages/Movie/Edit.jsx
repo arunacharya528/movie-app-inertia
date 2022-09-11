@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, useForm } from '@inertiajs/inertia-react';
+import { Head, Link, useForm } from '@inertiajs/inertia-react';
 import InputLabel from '@/components/InputLabel';
 import TextInput from '@/components/TextInput';
 import InputError from '@/components/InputError';
@@ -35,6 +35,8 @@ export default function Edit(props) {
             <Head title="Movies" />
 
             <form onSubmit={submit}>
+                <div className="text-2xl text-black font-bold py-5">Edit Movie</div>
+
                 <div>
                     <InputLabel forInput="title" value="Title" />
 
@@ -78,9 +80,13 @@ export default function Edit(props) {
                     <InputError message={errors.release_date} className="mt-2" />
                 </div>
 
-                <PrimaryButton className="mt-4" disabled={processing} >
-                    Update
-                </PrimaryButton>
+                <div className="flex space-x-3 items-center mt-4">
+                    <PrimaryButton className="" disabled={processing} >
+                        Update
+                    </PrimaryButton>
+                    <Link href={route('movie.show', props.movie.id)} className="btn btn-sm">Cancel</Link>
+                </div>
+
 
             </form>
 

@@ -18,8 +18,9 @@ export default function View(props) {
         >
             <Head title="Movie Detail" />
 
-            <div className="pb-5">
-                <Link href={route('movie.edit', props.movie.id)} className="btn btn-ghost">Edit</Link>
+            <div className="pb-5 space-x-3">
+                <Link href={route('movie.edit', props.movie.id)} className="btn">Edit</Link>
+                <Link href={route('movie.editPoster', props.movie.id)} className="btn">Edit Poster</Link>
             </div>
             <div className='flex flex-col space-y-5'>
                 <div className="block">

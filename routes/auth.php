@@ -59,7 +59,12 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource('user', UserController::class);
+
+    Route::get("movie/{id}/editPoster", [MovieController::class, 'editPoster'])->name('movie.editPoster');
+    Route::post("movie/{id}/updatePoster", [MovieController::class, 'updatePoster'])->name('movie.updatePoster');
     Route::resource('movie', MovieController::class);
+
+
     Route::post("movie/togglePublishedState/{id}", [MovieController::class, 'togglePublishedState'])->name('movie.togglePublishedState');
     Route::resource('favourite', FavouriteController::class);
 });
