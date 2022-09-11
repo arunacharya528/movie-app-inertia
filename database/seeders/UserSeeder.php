@@ -20,6 +20,11 @@ class UserSeeder extends Seeder
             'role' => 1
         ]);
 
-        User::factory(9)->create();
+        User::factory()->create([
+            'email' => 'user@movieapp.com',
+            'role' => 2
+        ]);
+
+        User::factory(8)->create();
     }
 }
